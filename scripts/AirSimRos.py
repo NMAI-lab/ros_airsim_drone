@@ -4,7 +4,6 @@
 # @author: Patrick Gavigan
 
 from AirSimConnector import AirSimConnector
-from ThreadSafeConsole import ThreadSafeConsole
 from ActuatorControllers import runActuators
 from SensorControllers import runSensors
 
@@ -14,10 +13,9 @@ from std_msgs.msg import String
 
 def airSimRos():
     airSimConnector = AirSimConnector()
-    logger = ThreadSafeConsole()
     rospy.init_node('AirSimDrone', anonymous=True)
-    runActuators(airSimConnector, logger)
-    runSensors(airSimConnector, logger)    
+    runActuators(airSimConnector)
+    runSensors(airSimConnector)    
 
 if __name__ == '__main__':
     try:
