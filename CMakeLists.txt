@@ -53,6 +53,7 @@ add_message_files(
   ImuData.msg
   Quaternion.msg
   Vector.msg
+  BarometerData.msg
 )
 
 ## Generate services in the 'srv' folder
