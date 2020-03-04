@@ -47,7 +47,7 @@ def runImu(airSimConnector, publisher):
 def runSensors(airSimConnector):
 
     # Initialize the publuishers
-    publisher = rospy.Publisher('imu', String, queue_size=10)
+    publisher = rospy.Publisher('imu', ImuData, queue_size=10)
     
     # Set the sensor publishing frequency
     rate = rospy.Rate(1) # 1hz

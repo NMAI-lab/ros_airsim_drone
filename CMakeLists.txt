@@ -71,11 +71,8 @@ add_message_files(
 
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
-   DEPENDENCIES
-   std_msgs
-   ros_airsim_drone.ImuData
-   ros_airsim_drone.Quaternion
-   ros_airsim_drone.Vector
+  DEPENDENCIES
+  std_msgs
 )
 
 ################################################

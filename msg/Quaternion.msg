@@ -1,4 +1,4 @@
-float w
-float x
-float y
-float z
+float64 w
+float64 x
+float64 y
+float64 z
