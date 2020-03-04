@@ -1,0 +1,4 @@
+Vector angularVelocity
+Vector linearAcceleration
+Quaternion orientation
+uint64 timeStamp
