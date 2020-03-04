@@ -26,7 +26,12 @@ class AirSimConnector:
 
     def getImuData(self):
         self.sem.acquire()
-        imuData = self.client.getImuData()
+        data = self.client.getImuData()
         self.sem.release()
-        return imuData
-        
+        return data
+
+    def getBarometerData(self):
+        self.sem.acquire()
+        data = self.client.getBarometerData()
+        self.sem.release()
+        return data
