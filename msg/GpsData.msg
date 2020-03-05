@@ -1,0 +1,3 @@
+gnssReport velocity
+bool isValid
+uint64 timeStamp

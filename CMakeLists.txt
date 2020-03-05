@@ -50,10 +50,14 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
 add_message_files(
   FILES
+  BarometerData.msg
+  GeoPoint.msg
+  GnssReport.msg
+  GpsData.msg
   ImuData.msg
+  MagnetometerData.msg
   Quaternion.msg
   Vector.msg
-  BarometerData.msg
 )
 
 ## Generate services in the 'srv' folder
