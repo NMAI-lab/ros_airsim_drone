@@ -1,0 +1,3 @@
+float64 altitude
+float64 latitude
+float64 longitude

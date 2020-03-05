@@ -7,6 +7,8 @@
 import rospy
 from ros_airsim_drone.msg import ImuData
 from ros_airsim_drone.msg import BarometerData
+from ros_airsim_drone.msg import GpsData
+from ros_airsim_drone.msg import MagnetometerData
 
 def runImu(airSimConnector, publisher):
     # Get the data
@@ -48,13 +50,57 @@ def runBarometer(airSimConnector, publisher):
     rospy.loginfo(message)
     publisher.publish(message)
     
+def runGPS(airSimConnector, publisher):
+    # Get the data
+    data = airSimConnector.getGpsData()
     
+    # Prerpare the message
+    message = GpsData()
+    message.gnssReport.eph = data.gnss.eph
+    message.gnssReport.epv = data.gnss.epv
+    message.gnssReport.fixType = data.gnss.fix_type
+    
+    message.gnssReport.geoPoint.altitude = data.gnss.geo_point.altitude
+    message.gnssReport.geoPoint.latitude = data.gnss.geo_point.latitude
+    message.gnssReport.geoPoint.longitude = data.gnss.geo_point.longitude
+    
+    message.gnssReport.utcTime = data.gnss.time_utc
+    
+    message.gnssReport.velocity.x = data.gnss.velocity.x_val
+    message.gnssReport.velocity.y = data.gnss.velocity.y_val
+    message.gnssReport.velocity.z = data.gnss.velocity.z_val
+    
+    message.isValid = data.is_valid
+    message.timeStamp = data.time_stamp
+    
+    # Publish the message
+    rospy.loginfo(message)
+    publisher.publish(message)
+    
+def runMagnetometer(airSimConnector, publisher):
+    # Get the data
+    data = airSimConnector.getMagnetometerData()
+    
+    # Prepare the message
+    message = MagnetometerData()
+    message.fieldBody.x = data.magnetic_field_body.x_val
+    message.fieldBody.y = data.magnetic_field_body.y_val
+    message.fieldBody.z = data.magnetic_field_body.z_val
+    
+    for instance in data.magnetic_field_covariance:
+        message.covariance.append(instance)
+    
+    # Publish the message
+    rospy.loginfo(message)
+    publisher.publish(message)   
 
 def runSensors(airSimConnector):
 
     # Initialize the publuishers
-    imuPublisher = rospy.Publisher('imu', ImuData, queue_size=10)
-    barometerPublisher = rospy.Publisher('barometer', BarometerData, queue_size=10)
+    imuPublisher = rospy.Publisher('droneSensor/imu', ImuData, queue_size=10)
+    barometerPublisher = rospy.Publisher('droneSensor/barometer', BarometerData, queue_size=10)
+    gpsPublisher = rospy.Publisher('droneSensor/gps', GpsData, queue_size=10)
+    magnetometerPublisher = rospy.Publisher('droneSensor/magnetometer', MagnetometerData, queue_size=10)
     
     # Set the sensor publishing frequency
     rate = rospy.Rate(1) # 1hz
@@ -63,4 +109,6 @@ def runSensors(airSimConnector):
     while not rospy.is_shutdown():
         runImu(airSimConnector, imuPublisher)
         runBarometer(airSimConnector, barometerPublisher)
+        runGPS(airSimConnector, gpsPublisher)
+        runMagnetometer(airSimConnector, magnetometerPublisher)
         rate.sleep()

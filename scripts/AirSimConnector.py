@@ -35,3 +35,15 @@ class AirSimConnector:
         data = self.client.getBarometerData()
         self.sem.release()
         return data
+    
+    def getGpsData(self):
+        self.sem.acquire()
+        data = self.client.getGpsData()
+        self.sem.release()
+        return data
+    
+    def getMagnetometerData(self):
+        self.sem.acquire()
+        data = self.client.getMagnetometerData()
+        self.sem.release()
+        return data

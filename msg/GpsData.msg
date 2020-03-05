@@ -1,0 +1,3 @@
+GnssReport gnssReport
+bool isValid
+uint64 timeStamp
