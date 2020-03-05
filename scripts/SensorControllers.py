@@ -79,7 +79,7 @@ def runGPS(airSimConnector, publisher):
     
 def runMagnetometer(airSimConnector, publisher):
     # Get the data
-    data = airSimConnector.getMagnetometerData
+    data = airSimConnector.getMagnetometerData()
     
     # Prepare the message
     message = MagnetometerData()
@@ -87,7 +87,7 @@ def runMagnetometer(airSimConnector, publisher):
     message.fieldBody.y = data.magnetic_field_body.y_val
     message.fieldBody.z = data.magnetic_field_body.z_val
     
-    for instance in data.magnetic_field_covatiance:
+    for instance in data.magnetic_field_covariance:
         message.covariance.append(instance)
     
     # Publish the message
